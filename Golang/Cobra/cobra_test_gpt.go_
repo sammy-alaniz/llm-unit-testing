@@ -1,0 +1,85 @@
+// cobra_test.go
+package cobra
+
+import (
+	"fmt"
+	"reflect"
+	"testing"
+	"text/template"
+)
+
+func TestAddTemplateFunc(t *testing.T) {
+	funcName := "testFunc"
+	funcImpl := func() string { return "test" }
+
+	// Call the function to add the template function
+	AddTemplateFunc(funcName, funcImpl)
+
+	// Check if the function was added to the template functions map
+	if _, ok := templateFuncs[funcName]; !ok {
+		t.Errorf("Expected function %s to be added to templateFuncs", funcName)
+	}
+
+	// Check if the function implementation is correct
+	if templateFuncs[funcName] != funcImpl {
+		t.Errorf("Expected function implementation to be %v, but got %v", funcImpl, templateFuncs[funcName])
+	}
+}
+
+func TestAddTemplateFuncs(t *testing.T) {
+	funcMap := template.FuncMap{
+		"testFunc1": func() string { return "test1" },
+		"testFunc2": func() string { return "test2" },
+	}
+
+	// Call the function to add the template functions
+	AddTemplateFuncs(funcMap)
+
+	// Check if the functions were added to the template functions map
+	for name, impl := range funcMap {
+		if _, ok := templateFuncs[name]; !ok {
+			t.Errorf("Expected function %s to be added to templateFuncs", name)
+		}
+		if templateFuncs[name] != impl {
+			t.Errorf("Expected function implementation for %s to be %v, but got %v", name, impl, templateFuncs[name])
+		}
+	}
+}
+
+func TestOnInitialize(t *testing.T) {
+	initFunc := func() { fmt.Println("Initialize") }
+
+	// Call the function to add an initializer
+	OnInitialize(initFunc)
+
+	// Check if the function was added to the initializers slice
+	found := false
+	for _, f := range initializers {
+		if reflect.ValueOf(f).Pointer() == reflect.ValueOf(initFunc).Pointer() {
+			found = true
+			break
+		}
+	}
+	if !found {
+		t.Errorf("Expected initializer function to be added")
+	}
+}
+
+func TestOnFinalize(t *testing.T) {
+	finalizeFunc := func() { fmt.Println("Finalize") }
+
+	// Call the function to add a finalizer
+	OnFinalize(finalizeFunc)
+
+	// Check if the function was added to the finalizers slice
+	found := false
+	for _, f := range finalizers {
+		if reflect.ValueOf(f).Pointer() == reflect.ValueOf(finalizeFunc).Pointer() {
+			found = true
+			break
+		}
+	}
+	if !found {
+		t.Errorf("Expected finalizer function to be added")
+	}
+}
