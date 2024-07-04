@@ -13,7 +13,7 @@ The original tests are located in the `test` directory. Our new tests will be wr
 2. Run `source env/bin/activate`
 3. Run `pip install -e .`
 4. Run `pip install pytest`
-5. Run `pytest`
+5. Run `pytest test/`
 
 
 ### How to run llm-research tests:
