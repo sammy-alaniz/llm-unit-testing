@@ -1,9 +1,12 @@
 
 from PromptBuilder import PromptBuilder
-import json
+import TestConfig
 
 if __name__ == "__main__":
     print('hello world')
+    
+    tc = TestConfig.parseConfig('test.json')
+
 
     source_file_path = '/home/sammy/dev/school/cobra/args.go'
     test_file_path = ''
