@@ -1,11 +1,14 @@
 
 from PromptBuilder import PromptBuilder
 import TestConfig
+import sys
 
 if __name__ == "__main__":
-    print('hello world')
-    
-    tc = TestConfig.parseConfig('test.json')
+    if len(sys.argv) != 2:
+        print('[INFO] Must pass in a configuration file!')
+        sys.exit(1)
+
+    tc = TestConfig.parseConfig(sys.argv[1])
 
     # source_file_path = '/home/sammy/dev/school/cobra/args.go'
     # test_file_path = ''

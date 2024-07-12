@@ -1,5 +1,6 @@
 import logging
 import Templates
+import sys
 
 MAX_TESTS_PER_RUN = 4
 
@@ -69,7 +70,9 @@ class PromptBuilder:
             with open(file_path, "r") as f:
                 return f.read()
         except Exception as e:
-            return f"Error reading {file_path}: {e}"
+            print(f"Error reading {file_path}: {e}")
+            sys.exit(1)
+            # return f"Error reading {file_path}: {e}"
 
     def build_prompt(self) -> dict:
         """
