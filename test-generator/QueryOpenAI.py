@@ -1,11 +1,16 @@
 from openai import OpenAI
 client = OpenAI()
+file_contents = ""
+with open('test-prompt.txt','r') as file:
+    file_contents = file.read()
+
+print(file_contents)
 
 completion = client.chat.completions.create(
-  model="gpt-4o",
+  model="gpt-3.5-turbo-0125",
   messages=[
-    {"role": "system", "content": "You are a poetic assistant, skilled in explaining complex programming concepts with creative flair."},
-    {"role": "user", "content": "Compose a poem that explains the concept of recursion in programming."}
+    {"role": "system", "content": ""},
+    {"role": "user", "content": file_contents}
   ]
 )
 
