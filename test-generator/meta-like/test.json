@@ -1,0 +1,7 @@
+{
+    "test_file_path" : "/home/sammy/dev/school/cobra/args.go",
+    "included_files" : [
+        "/home/sammy/dev/school/cobra/command.go",
+        "/home/sammy/dev/school/cobra/cobra.go"
+    ]
+}
