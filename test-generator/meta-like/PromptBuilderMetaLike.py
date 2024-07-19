@@ -28,7 +28,7 @@ class PromptBuilder:
         for file_path in included_files_list:
             file_name = file_path.split("/")[-1]
             tmp = self._read_file(file_path)
-            file_contents = "\n".join([f"{i + 1} {line}" for i, line in enumerate(tmp)])
+            file_contents = "\n".join([f"{i + 1} {line}" for i, line in enumerate(tmp.split("\n"))])
             all_included_files += Templates.INCLUDED_FILE.format(included_file_name=file_name,
                                                                  included_file_with_line_numbers=file_contents)
         return all_included_files
@@ -67,6 +67,7 @@ class PromptBuilder:
         user_prompt = Templates.OVERVIEW.format(language=self.language)
         user_prompt += Templates.TEST_FILE.format(test_file_name=self.test_file_name,
                                                   test_file=self.test_file)
+        user_prompt += Templates.INCLUDED_FILES_PROMT
         user_prompt += self.included_files
 
         return {"system": system_prompt, "user": user_prompt}
